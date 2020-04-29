@@ -3,7 +3,7 @@ package com.cmk.notekeeper;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public final class NoteInfo implements  Parcelable{
+public final class NoteInfo implements Parcelable {
     private CourseInfo mCourse;
     private String mTitle;
     private String mText;
@@ -87,7 +87,7 @@ public final class NoteInfo implements  Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mCourse,0);
+        dest.writeParcelable(mCourse, 0);
         dest.writeString(mTitle);
         dest.writeString(mText);
 

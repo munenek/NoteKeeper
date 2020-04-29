@@ -30,7 +30,7 @@ import java.util.List;
 
 
 // added implements Navigation view and overrode the method
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private NoteRecyclerAdapter mRecyclerAdapter;
 
 

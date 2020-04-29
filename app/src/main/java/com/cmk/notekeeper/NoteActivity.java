@@ -50,7 +50,6 @@ public class NoteActivity extends AppCompatActivity {
         mViewModel.mIsNewlyCreated = false;
 
 
-
         mSpinnerCourses = findViewById(R.id.spinner_courses);
 
         List<CourseInfo> courses = DataManager.getInstance().getCourses();
@@ -66,13 +65,13 @@ public class NoteActivity extends AppCompatActivity {
 
         mTextNoteTitle = findViewById(R.id.text_note_title);
         mTextNoteText = findViewById(R.id.text_note_text);
-        if(!misnewnote) {
+        if (!misnewnote) {
             displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
         }
     }
 
     private void saveOriginalNoteValue() {
-        if(misnewnote)
+        if (misnewnote)
             return;
         mViewModel.mOriginalNoteCourseId = mNote.getCourse().getCourseId();
         mViewModel.mOriginalNoteTitle = mNote.getTitle();
@@ -83,16 +82,14 @@ public class NoteActivity extends AppCompatActivity {
     protected void onPause() {
 
         super.onPause();
-        if(!
-                mIsCancelling){
-            if(misnewnote) {
+        if (!
+                mIsCancelling) {
+            if (misnewnote) {
                 DataManager.getInstance().removeNote(mNoteposition);
-            }
-            else
+            } else
                 storePreviousNoteValue();
 
-        }
-        else {
+        } else {
 
             saveNote();
         }
@@ -112,7 +109,7 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        mNote.setCourse((CourseInfo)mSpinnerCourses.getSelectedItem()) ;
+        mNote.setCourse((CourseInfo) mSpinnerCourses.getSelectedItem());
         mNote.setTitle(mTextNoteTitle.getText().toString());
         mNote.setText(mTextNoteText.getText().toString());
 
@@ -133,16 +130,16 @@ public class NoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int position = intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET);
         misnewnote = position == POSITION_NOT_SET;
-        if(misnewnote){
+        if (misnewnote) {
             createNewNote();
         }
 
-            mNote = DataManager.getInstance().getNotes().get(position);
+        mNote = DataManager.getInstance().getNotes().get(position);
 
     }
 
     private void createNewNote() {
-        DataManager  dm = DataManager.getInstance();
+        DataManager dm = DataManager.getInstance();
         mNoteposition = dm.createNewNote();
         //mNote = dm.getNotes().get(mNoteposition);
     }
@@ -165,12 +162,10 @@ public class NoteActivity extends AppCompatActivity {
         if (id == R.id.action_send_mail) {
             sendemail();
             return true;
-        }
-        else if (id == R.id.action_cancel){
+        } else if (id == R.id.action_cancel) {
             mIsCancelling = true;
             finish();
-        }
-        else if(id ==R.id.iaction_next){
+        } else if (id == R.id.iaction_next) {
             moveNext();
         }
 
@@ -190,7 +185,7 @@ public class NoteActivity extends AppCompatActivity {
         ++mNoteposition;
         mNote = DataManager.getInstance().getNotes().get(mNoteposition);
         saveOriginalNoteValue();
-        displayNote(mSpinnerCourses,mTextNoteTitle,mTextNoteText);
+        displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
 
 
     }
@@ -198,13 +193,13 @@ public class NoteActivity extends AppCompatActivity {
     private void sendemail() {
         CourseInfo course = (CourseInfo) mSpinnerCourses.getSelectedItem();
         String subject = mTextNoteText.getText().toString();
-        String text = "check out what I learnt in the pluralsight course" + course.getTitle()+"\"\n"
-                +mTextNoteText.getText();
-        Intent intent =new Intent(Intent.ACTION_SEND);
+        String text = "check out what I learnt in the pluralsight course" + course.getTitle() + "\"\n"
+                + mTextNoteText.getText();
+        Intent intent = new Intent(Intent.ACTION_SEND);
         //standard mime type for sending emails
-         intent.setType("message/rfc2822");
-        intent.putExtra(Intent.EXTRA_SUBJECT,subject);
-        intent.putExtra(Intent.EXTRA_TEXT,text);
+        intent.setType("message/rfc2822");
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, text);
         startActivity(intent);
 
     }
